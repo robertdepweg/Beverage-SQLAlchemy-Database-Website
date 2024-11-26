@@ -25,6 +25,9 @@ from views.home import (
     home_view,
     contact_view
 )
+from views.employee import (
+    employee_list_view,
+)
 
 app = Flask(__name__)
 
@@ -37,3 +40,4 @@ app = Flask(__name__)
 # Define the routes for the app
 app.add_url_rule("/", view_func=home_view)
 app.add_url_rule("/contact", view_func=contact_view)
+app.add_url_rule("/employees", view_func=employee_list_view)
