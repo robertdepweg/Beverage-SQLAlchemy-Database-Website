@@ -6,11 +6,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # First-Party Imports
-from models.employee import Employee, Base
+from models.employee import Employee
 
 # Create database session
 engine = create_engine("sqlite:///db.sqlite3", echo=False)
-Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 db_session = Session()
 
@@ -24,4 +23,12 @@ def employee_list_view():
         "employee/employee_list.html",
         # Variables it needs
         employees=employees,
+    )
+
+def employee_add_view():
+    """Allow adding a new Employee to the database"""
+
+    # Return the form for adding a new employee
+    return render_template(
+        "employee/employee_add.html",
     )
