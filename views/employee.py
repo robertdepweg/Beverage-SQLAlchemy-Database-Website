@@ -26,7 +26,7 @@ def employee_list_view():
     )
 
 def employee_add_view():
-    """Allow adding a new Employee to the database"""
+    """Show page for adding a new Employee to the database"""
 
     # List to store any errors encountered
     errors = []
@@ -56,9 +56,15 @@ def employee_add_view():
             flash("User added successfully!", "success")
 
             return redirect(url_for("employee_list_view"))
+    
+    # Return the form for adding a new employee
+    return render_template(
+        "employee/employee_add.html",
+        errors=errors,
+    )
         
 def employee_edit_view(pk):
-    """Allow editing an existing Employee in the database"""
+    """Show page for editing an existing Employee in the database"""
 
     # List to store any errors encountered
     errors = []
@@ -96,9 +102,33 @@ def employee_edit_view(pk):
 
             return redirect(url_for("employee_list_view"))
 
-    # Return the form for adding a new employee
+    # Return the form for editing a new employee
     return render_template(
         "employee/employee_edit.html",
+        employee=employee,
+        errors=errors,
+    )
+
+def employee_delete_view(pk):
+    """Show page for deleting an existing Employee"""
+    errors = []
+
+    employee = db_session.get(Employee, pk)
+
+    if not employee:
+        flash(f"Unknown employee with pk of {pk}", "danger")
+        return redirect(url_for("employee_list_view"))
+
+    if request.method == "POST":
+        db_session.delete(employee)
+        db_session.commit()
+
+        flash("User deleted successfully!", "success")
+
+        return redirect(url_for("employee_list_view"))
+
+    return render_template(
+        "employee/employee_delete.html",
         employee=employee,
         errors=errors,
     )

@@ -29,6 +29,7 @@ from views.employee import (
     employee_list_view,
     employee_add_view,
     employee_edit_view,
+    employee_delete_view,
 )
 
 app = Flask(__name__)
@@ -50,5 +51,10 @@ app.add_url_rule("/employees/add", view_func=employee_add_view, methods=["GET", 
 app.add_url_rule(
     "/employees/<int:pk>/edit",
     view_func=employee_edit_view,
+    methods=["GET", "POST"],
+)
+app.add_url_rule(
+    "/employees/<int:pk>/delete",
+    view_func=employee_delete_view,
     methods=["GET", "POST"],
 )
